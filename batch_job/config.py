@@ -1,6 +1,11 @@
 bw_monitor_host = 'http://localhost:5000'
 
-import rfc_connection.qcb as current_env
+from batch_job.switch_env import switch_env
+
+if switch_env == "qcb":
+    import rfc_connection.qcb as current_env
+elif switch_env == "pcb":
+    import rfc_connection.pcb as current_env
 
 user = current_env.user
 ashost = current_env.ashost
