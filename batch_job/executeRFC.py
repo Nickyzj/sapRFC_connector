@@ -1,7 +1,7 @@
 import requests
 import json
 import pyrfc
-from rfc_connection.qcb import user, ashost, sysnr, client, passwd
+from batch_job.config import user, ashost, sysnr, client, passwd
 from batch_job.config import bw_monitor_host
 
 
