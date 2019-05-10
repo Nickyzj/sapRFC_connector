@@ -126,3 +126,4 @@ static/img
 test
 pcb.py
 qcb.py
+switch_env.py
