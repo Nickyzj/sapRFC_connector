@@ -25,10 +25,15 @@ def rfcCall(item):
 def main():
     try:
         r = requests.get(bw_monitor_host + '/data/execute')
-        print(r.json())
-        data = json.loads(r.text)
+        if len(r.content) >3:
+            print(r.json())
+            data = json.loads(r.text)
+        else:
+            return
         if data.get('rfcName') not in rfcNameList:
-            print('List is empty.')
+            returnMsg = JsonMessage(data.get('rfcName') + ' is not defined.').message()
+            print(returnMsg)
+            r = requests.post(bw_monitor_host + '/data/execute/status', json = returnMsg)
         else:
             returnMsg = rfcCall(data)
             r = requests.post(bw_monitor_host + '/data/execute/status', json = returnMsg)
@@ -40,6 +45,14 @@ def main():
         print(e)
 
 rfcNameList = ['ZCHAIN_REMOVE_INVALID_CHAR', 'ZCHAIN_ACTIVATE_TR_DTP', 'ZCHAIN_STEP_REPEAT', 'ZCHAIN_IGNORE_VARIANT']
+
+class JsonMessage:
+
+    def __init__(self, msg = ''):
+        self.json = msg
+
+    def message(self):
+        return '{{"error": {0}}}'.format(self.json)
 
 if __name__ == '__main__':
     main()

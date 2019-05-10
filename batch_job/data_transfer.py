@@ -26,7 +26,7 @@ def main():
 
     try:
         r = requests.post(bw_monitor_host + '/data/upload', json = data)
-        print(r.text)
+        # print(r.text)
     except requests.exceptions.ConnectionError as e:
         print(e)
     except requests.exceptions.Timeout as e:
