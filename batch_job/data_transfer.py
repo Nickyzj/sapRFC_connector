@@ -3,6 +3,10 @@ import json
 import pyrfc
 from batch_job.config import user, ashost, sysnr, client, passwd
 from batch_job.config import bw_monitor_host
+from datetime import datetime, timedelta, date
+
+def getYesterday():
+    return (datetime.today() - timedelta(days=1)).strftime("%Y%m%d")
 
 def getData():
     conn_bw = pyrfc.Connection(ashost=ashost, sysnr=sysnr, client=client, user=user, passwd=passwd)
@@ -11,7 +15,7 @@ def getData():
     T_ZCHAIN_AF_LOG = ''
     result = ''
     chain_monitor_rfc = conn_bw.call('ZCHAIN_MONITOR',
-                                     I_LOG_DATE='20190401',
+                                     I_LOG_DATE=getYesterday(),
                                      T_ZCHAIN_AF_INFO=T_ZCHAIN_AF_INFO)
 
     conn_bw.close()
