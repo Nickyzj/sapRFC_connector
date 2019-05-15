@@ -24,7 +24,7 @@ def rfcCall(item):
 
 def main():
     try:
-        r = requests.get(bw_monitor_host + '/data/execute')
+        r = requests.get(bw_monitor_host + '/data/execute/qcb')
         if len(r.content) >3:
             print(r.json())
             data = json.loads(r.text)
@@ -33,10 +33,10 @@ def main():
         if data.get('rfcName') not in rfcNameList:
             returnMsg = JsonMessage(data.get('rfcName') + ' is not defined.').message()
             print(returnMsg)
-            r = requests.post(bw_monitor_host + '/data/execute/status', json = returnMsg)
+            r = requests.post(bw_monitor_host + '/data/execute/status/qcb', json = returnMsg)
         else:
             returnMsg = rfcCall(data)
-            r = requests.post(bw_monitor_host + '/data/execute/status', json = returnMsg)
+            r = requests.post(bw_monitor_host + '/data/execute/status/qcb', json = returnMsg)
             print(r.text)
 
     except requests.exceptions.ConnectionError as e:

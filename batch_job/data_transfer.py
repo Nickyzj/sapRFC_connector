@@ -29,7 +29,7 @@ def main():
         print(e)
 
     try:
-        r = requests.post(bw_monitor_host + '/data/upload', json = data)
+        r = requests.post(bw_monitor_host + '/data/upload/qcb', json = data)
         # print(r.text)
     except requests.exceptions.ConnectionError as e:
         print(e)
