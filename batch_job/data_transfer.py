@@ -5,8 +5,8 @@ from batch_job.config import user, ashost, sysnr, client, passwd
 from batch_job.config import bw_monitor_host
 from datetime import datetime, timedelta, date
 
-def getYesterday():
-    return (datetime.today() - timedelta(days=1)).strftime("%Y%m%d")
+def getYesterday(day_diff=3):
+    return (datetime.today() - timedelta(days=day_diff)).strftime("%Y%m%d")
 
 def getData():
     conn_bw = pyrfc.Connection(ashost=ashost, sysnr=sysnr, client=client, user=user, passwd=passwd)
