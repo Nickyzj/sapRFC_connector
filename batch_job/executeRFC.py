@@ -44,7 +44,7 @@ def main():
     except requests.exceptions.Timeout as e:
         print(e)
 
-rfcNameList = ['ZCHAIN_REMOVE_INVALID_CHAR', 'ZCHAIN_ACTIVATE_TR_DTP', 'ZCHAIN_STEP_REPEAT', 'ZCHAIN_IGNORE_VARIANT']
+rfcNameList = ['ZCHAIN_REMOVE_INVALID_CHAR', 'ZCHAIN_ACTIVATE_TR_DTP', 'ZCHAIN_STEP_REPEAT', 'ZCHAIN_IGNORE_VARIANT', 'ZCHAIN_SKIP_STEP']
 
 class JsonMessage:
 

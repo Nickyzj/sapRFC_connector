@@ -1,4 +1,5 @@
 bw_monitor_host = 'http://localhost:5000'
+# bw_monitor_host = 'http://47.100.38.95:5000'
 
 from batch_job.switch_env import switch_env
 
