@@ -1,18 +1,30 @@
 bw_monitor_host = 'http://localhost:5000'
-# bw_monitor_host = 'http://47.100.38.95:5000'
 
-from batch_job.switch_env import switch_env
+class SAPConnection:
 
-if switch_env == "qcb":
-    import rfc_connection.qcb as current_env
-    print("Current env: qcb")
-elif switch_env == "pcb":
-    import rfc_connection.pcb as current_env
-    print("Current env: pcb")
+    def __init__(self, name, user, ashost, sysnr, client, passwd):
+        self.name = name
+        self.user = user
+        self.ashost = ashost
+        self.sysnr = sysnr
+        self.client = client
+        self.passwd = passwd
 
-user = current_env.user
-ashost = current_env.ashost
-sysnr = current_env.sysnr
-client = current_env.client
-passwd = current_env.passwd
+import rfc_connection.qcb as qcb_config
+
+qcb = SAPConnection(name = 'qcb',
+                    user = qcb_config.user,
+                    ashost = qcb_config.ashost,
+                    sysnr = qcb_config.sysnr,
+                    client = qcb_config.client,
+                    passwd = qcb_config.passwd)
+
+import rfc_connection.pcb as pcb_config
+
+pcb = SAPConnection(name = 'pcb',
+                    user = pcb_config.user,
+                    ashost = pcb_config.ashost,
+                    sysnr = pcb_config.sysnr,
+                    client = pcb_config.client,
+                    passwd = pcb_config.passwd)
 

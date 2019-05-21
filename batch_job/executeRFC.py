@@ -1,13 +1,18 @@
 import requests
 import json
 import pyrfc
-from batch_job.config import user, ashost, sysnr, client, passwd
 from batch_job.config import bw_monitor_host
+from batch_job.config import qcb
 
 
-def rfcCall(item):
+def rfcCall(sapConnection, item):
     try:
-        conn_bw = pyrfc.Connection(ashost=ashost, sysnr=sysnr, client=client, user=user, passwd=passwd)
+        conn_bw = pyrfc.Connection(ashost=sapConnection.ashost,
+                                   sysnr=sapConnection.sysnr,
+                                   client=sapConnection.client,
+                                   user=sapConnection.user,
+                                   passwd=sapConnection.passwd)
+
         result = conn_bw.call(item['rfcName'],
                               I_LOGID = item['LOG_ID'],
                               I_CHAIN = item['CHAIN_ID'],
@@ -22,9 +27,9 @@ def rfcCall(item):
     else:
         return result
 
-def main():
+def main(sapConnection):
     try:
-        r = requests.get(bw_monitor_host + '/data/execute/qcb')
+        r = requests.get(bw_monitor_host + '/data/execute/' + sapConnection.name)
         if len(r.content) >3:
             print(r.json())
             data = json.loads(r.text)
@@ -33,11 +38,12 @@ def main():
         if data.get('rfcName') not in rfcNameList:
             returnMsg = JsonMessage(data.get('rfcName') + ' is not defined.').message()
             print(returnMsg)
-            r = requests.post(bw_monitor_host + '/data/execute/status/qcb', json = returnMsg)
         else:
-            returnMsg = rfcCall(data)
-            r = requests.post(bw_monitor_host + '/data/execute/status/qcb', json = returnMsg)
-            print(r.text)
+            returnMsg = rfcCall(sapConnection = sapConnection, item = data)
+            print(returnMsg)
+        r = requests.post(bw_monitor_host + '/data/execute/status/' + sapConnection.name,
+                          json = returnMsg)
+        print(r.text)
 
     except requests.exceptions.ConnectionError as e:
         print(e)
@@ -55,4 +61,4 @@ class JsonMessage:
         return '{{"error": {0}}}'.format(self.json)
 
 if __name__ == '__main__':
-    main()
+    main(qcb)
