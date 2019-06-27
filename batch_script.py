@@ -3,7 +3,7 @@ import time
 import batch_job.data_transfer as data_transfer
 import batch_job.executeRFC as executeRFC
 
-from batch_job.config import qcb, pcb
+from batch_job.config import qcb, pcb, pb1, pw1
 
 def callDataTransfer(sapConnection):
     print('callDataTransfer started...')
@@ -23,6 +23,8 @@ if __name__ == '__main__':
     sapConnections = []
     sapConnections.append(qcb)
     sapConnections.append(pcb)
+    sapConnections.append(pb1)
+    sapConnections.append(pw1)
 
     threadGroup = []
     for sapConnection in sapConnections:
