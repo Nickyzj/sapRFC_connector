@@ -5,7 +5,7 @@ from batch_job.config import qcb
 from batch_job.config import bw_monitor_host
 from datetime import datetime, timedelta, date
 
-def getYesterday(day_diff=3):
+def getYesterday(day_diff=1):
     return (datetime.today() - timedelta(days=day_diff)).strftime("%Y%m%d")
 
 def getData(sapConnection):
